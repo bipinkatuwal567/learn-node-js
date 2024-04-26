@@ -9,13 +9,15 @@
 // console.log(addTwoNumber(5, 5));
 
 /* GLOBAL in nodejs */
-global.companyName = "xyz company";
+// global.companyName = "xyz company";
 
-function print(){
-    /* We can declare global variable without using global keyword */
-    programName = "javascript";
-    console.log(companyName);
-}
+// function print(){
+//     /* We can declare global variable without using global keyword */
+//     programName = "javascript";
+//     console.log(companyName);
+// }
 
-print();
-console.log(programName);
+// print();
+// console.log(programName);
+
+console.log(process.env.USER);
