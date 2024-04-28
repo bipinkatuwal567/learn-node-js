@@ -1,6 +1,10 @@
-import {URL} from "url";
+import http from "http"
 
-const url = new URL("https://google.com/forestSass");
+const server = http.createServer((req, res) => {
+    res.writeHead(200);
+    res.end("Backend is working\nBakc");
+})
 
-console.log(url.hostname);
-console.log(url.pathname);
+server.listen(8000, () => {
+    console.log("Server is running");
+})
