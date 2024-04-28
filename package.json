@@ -2,6 +2,7 @@
   "name": "learn-node",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "greet": "Namaste",
     "start": "node ."

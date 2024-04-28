@@ -20,4 +20,10 @@
 // print();
 // console.log(programName);
 
-console.log(process.env.USER);
+// console.log(process.env.USER);
+
+// const {add, sub} = require("./app")
+import {add, sub} from "./app.js"
+
+console.log(add(5, 6));
+console.log(sub(5, 6));
