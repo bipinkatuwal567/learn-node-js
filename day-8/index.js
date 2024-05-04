@@ -27,7 +27,6 @@ app.post("/user/add", (req, res) => {
   );
 });
 
-
 /* Read operation */
 app.get("/user/:id", (req, res) => {
   const { id } = req.params;
@@ -36,11 +35,36 @@ app.get("/user/:id", (req, res) => {
       `SELECT * FROM user WHERE id=${id}`,
       (err, results, fields) => {
         if (err) throw err;
-        res.status(200).json(...results)
+        res.status(200).json(...results);
       }
     );
   } else {
     res.status(200).json({ success: false, message: "User ID NOT provided" });
+  }
+});
+
+/* Update operation */
+app.put("/user/update/:id", (req, res) => {
+  const { id } = req.params;
+
+  if (id) {
+    const { username, location } = req.body;
+
+    connection.query(
+      `UPDATE user SET username='${username}', location='${location}' WHERE id=${id}`, 
+      (err, results, fields) => {
+        if(err) throw err;
+
+        console.log(results);
+        if(results.affectedRows === 1){
+          res.status(200).json({success: true, message: "User updated"})
+        }else{
+          res.status(200).json({success: false, message: "Unable to update user"})
+        }
+      }
+    );
+  } else {
+    res.status(200).json({ success: false, message: "User ID Not provided" });
   }
 });
 
