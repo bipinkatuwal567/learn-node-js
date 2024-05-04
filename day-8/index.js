@@ -68,6 +68,27 @@ app.put("/user/update/:id", (req, res) => {
   }
 });
 
+/* Delete operattion */
+app.delete("/user/delete/:id", (req, res) => {
+  const {id} = req.params;
+
+  if(id){
+    connection.query(`DELETE FROM user WHERE id=${id}`, 
+      (err, results, fields) => {
+        if(err) throw err;
+
+        if(results.affectedRows === 1){
+          res.status(200).json({success: true, message: "User Deleted"})
+        }else{
+          res.status(200).json({success: false, message: "Unable to delete user"})
+        }
+      }
+    )
+  }else{
+    res.status(200).json({success: false, message: "User ID Not provided"})
+  }
+})
+
 app.listen(8000, () => {
   console.log("Server has started");
   connection = mysql.createConnection({
