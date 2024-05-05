@@ -1,30 +1,19 @@
 import express from "express";
 import connection from "../models/index.js";
-
+import Users from "../models/userModel.js";
 
 const router = express.Router();
 
 /* Insert user to the database */
-router.post("/add", (req, res) => {
+router.post("/add", async (req, res) => {
   const { username, location } = req.body;
 
-  connection.query(
-    `INSERT INTO user (username, location) VALUES (?, ?)`,
-    [username, location],
-    (err, results, fields) => {
-      if (err) throw err;
-
-      if (results.affectedRows === 1) {
-        res
-          .status(200)
-          .json({ success: true, message: "User added to database" });
-      } else {
-        res
-          .status(200)
-          .json({ success: false, message: "Unable to add user to database" });
-      }
-    }
-  );
+  try {
+    const data = await Users.create({ username, location });
+    res.status(200).json(data);
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 /* Read operation */

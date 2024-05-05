@@ -16,6 +16,8 @@ const Users = connection.define("users", {
     type: DataTypes.STRING,
     allowNull: false,
   },
+}, {
+  timestamps: false,
 });
 
 export default Users;
