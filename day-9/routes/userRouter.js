@@ -17,14 +17,14 @@ router.post("/add", async (req, res) => {
 });
 
 /* Read operation */
-router.get("/:id", async(req, res) => {
+router.get("/:id", async (req, res) => {
   const { id } = req.params;
   if (id) {
     const data = await Users.findByPk(id);
 
-    if(data){
+    if (data) {
       res.json(data);
-    }else{
+    } else {
       res.json([]);
     }
   } else {
@@ -33,28 +33,27 @@ router.get("/:id", async(req, res) => {
 });
 
 /* Update operation */
-router.put("/update/:id", (req, res) => {
+router.put("/update/:id", async (req, res) => {
   const { id } = req.params;
 
   if (id) {
     const { username, location } = req.body;
 
-    connection.query(
-      `UPDATE user SET username=?, location=? WHERE id=?`,
-      [username, location, id],
-      (err, results, fields) => {
-        if (err) throw err;
-
-        console.log(results);
-        if (results.affectedRows === 1) {
-          res.status(200).json({ success: true, message: "User updated" });
-        } else {
-          res
-            .status(200)
-            .json({ success: false, message: "Unable to update user" });
-        }
+    const data = await Users.update(
+      { username, location },
+      {
+        where: {
+          id,
+        },
       }
     );
+    
+    if(data[0] === 1){
+      res.status(200).json({success: true, message: "User updated"})
+    }else{
+      res.status(200).json({success: false, message: "Unable to update the user"})
+    }
+    
   } else {
     res.status(200).json({ success: false, message: "User ID Not provided" });
   }
