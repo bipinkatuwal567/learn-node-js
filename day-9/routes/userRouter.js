@@ -1,6 +1,7 @@
 import express from "express";
 import connection from "../models/index.js";
 import Users from "../models/userModel.js";
+import { Op } from "sequelize";
 
 const router = express.Router();
 
@@ -81,5 +82,24 @@ router.delete("/delete/:id", async (req, res) => {
     res.status(200).json({ success: false, message: "User ID Not provided" });
   }
 });
+
+router.get("/search/by", async(req, res) => {
+  const {location} = req.query;
+
+  const data = await Users.findAll({
+    where: {
+      location: {
+        [Op.like]: `%${location}%`
+      }
+    }
+  })
+
+  console.log(data);
+  if(data){
+    res.json(data)
+  }else{
+    res.json([]);
+  }
+})
 
 export default router;
