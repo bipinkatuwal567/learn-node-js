@@ -1,5 +1,4 @@
 import express from "express";
-import mysql from "mysql2";
 import router from "./routes/userRouter.js";
 
 const app = express();
