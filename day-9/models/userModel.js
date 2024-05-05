@@ -1,23 +1,34 @@
 import { DataTypes } from "sequelize";
 import connection from "./index.js";
 
-const Users = connection.define("users", {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    allowNull: false,
-    autoIncrement: true,
+const Users = connection.define(
+  "users",
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      allowNull: false,
+      autoIncrement: true,
+    },
+    username: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    location: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      set(value) {
+        this.setDataValue("location", value + ", Nepal");
+      },
+
+      get() {
+        return this.getDataValue("location").toUpperCase();
+      },
+    },
   },
-  username: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  location: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-}, {
-  timestamps: false,
-});
+  {
+    timestamps: false,
+  }
+);
 
 export default Users;
