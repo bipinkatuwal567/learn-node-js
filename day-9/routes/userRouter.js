@@ -47,38 +47,36 @@ router.put("/update/:id", async (req, res) => {
         },
       }
     );
-    
-    if(data[0] === 1){
-      res.status(200).json({success: true, message: "User updated"})
-    }else{
-      res.status(200).json({success: false, message: "Unable to update the user"})
+
+    if (data[0] === 1) {
+      res.status(200).json({ success: true, message: "User updated" });
+    } else {
+      res
+        .status(200)
+        .json({ success: false, message: "Unable to update the user" });
     }
-    
   } else {
     res.status(200).json({ success: false, message: "User ID Not provided" });
   }
 });
 
 /* Delete operattion */
-router.delete("/delete/:id", (req, res) => {
+router.delete("/delete/:id", async (req, res) => {
   const { id } = req.params;
 
   if (id) {
-    connection.query(
-      `DELETE FROM user WHERE id=?`,
-      [id],
-      (err, results, fields) => {
-        if (err) throw err;
+    const data = await Users.destroy({
+      where: {
+        id,
+      },
+    });
 
-        if (results.affectedRows === 1) {
-          res.status(200).json({ success: true, message: "User Deleted" });
-        } else {
-          res
-            .status(200)
-            .json({ success: false, message: "Unable to delete user" });
-        }
-      }
-    );
+    if(data){
+      res.json({success: true, message: "Successfully delete user"})
+    }else{
+      res.json({success: false, message: "Couldn't delete user"})
+    }
+    
   } else {
     res.status(200).json({ success: false, message: "User ID Not provided" });
   }
