@@ -17,17 +17,16 @@ router.post("/add", async (req, res) => {
 });
 
 /* Read operation */
-router.get("/:id", (req, res) => {
+router.get("/:id", async(req, res) => {
   const { id } = req.params;
   if (id) {
-    connection.query(
-      `SELECT * FROM user WHERE id=?`,
-      [id],
-      (err, results, fields) => {
-        if (err) throw err;
-        res.status(200).json(...results);
-      }
-    );
+    const data = await Users.findByPk(id);
+
+    if(data){
+      res.json(data);
+    }else{
+      res.json([]);
+    }
   } else {
     res.status(200).json({ success: false, message: "User ID NOT provided" });
   }
