@@ -26,4 +26,6 @@ const upload = multer({ storage: storage });
 router.post("/add", upload.single("image"), (req, res) => {
   bookController.addBook(req, res, imageName);
 });
+
+router.get("/:id", bookController.getBook);
 export default router;
