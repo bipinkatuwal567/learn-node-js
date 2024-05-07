@@ -1,17 +1,29 @@
 import { Router } from "express";
-import bookModel from "../models/bookModel.js";
+import BookController from "../controllers/bookController.js";
+import multer from "multer";
 
 const router = Router();
+let imageName;
 
-router.post("/add", async (req, res) => {
-  console.log(req.body);
-  const data = await bookModel.create(req.body);
-  console.log(data);
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, "public/uploads");
+    },
+    filename: function (req, file, cb) {
+        imageName =
+        Date.now() +
+        "-" +
+        Math.round(Math.random() * 1e9) +
+        "-" +
+        file.originalname.trim();
+        cb(null, imageName);
+    },
+});
 
-  if(data){
-      res.json(data);
-  }else{
-      res.json({sucess: false, message: "Error during adding book"})
-  }
+const bookController = new BookController();
+const upload = multer({ storage: storage });
+
+router.post("/add", upload.single("image"), (req, res) => {
+  bookController.addBook(req, res, imageName);
 });
 export default router;
