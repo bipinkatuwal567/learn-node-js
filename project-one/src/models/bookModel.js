@@ -25,4 +25,6 @@ export default connection.define("books", {
     image: {
         type: DataTypes.STRING
     }
+}, {
+    timestamps: false,
 })
