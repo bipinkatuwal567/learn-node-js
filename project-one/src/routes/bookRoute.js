@@ -28,4 +28,7 @@ router.post("/add", upload.single("image"), (req, res) => {
 });
 
 router.get("/:id", bookController.getBook);
+
+router.put("/update/:id", bookController.updateBook);
+
 export default router;
