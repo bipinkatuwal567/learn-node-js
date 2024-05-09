@@ -1,3 +1,4 @@
+import { Op } from "sequelize";
 import bookModel from "../models/bookModel.js";
 
 export default class bookController {
@@ -55,13 +56,40 @@ export default class bookController {
           id,
         },
       });
-      if(data === 1){
-        res.json({sucess: true, message: "Book has been deleted"})
-      }else{
-        res.json({sucess: false, message: "Unable to delete book"})
+      if (data === 1) {
+        res.json({ sucess: true, message: "Book has been deleted" });
+      } else {
+        res.json({ sucess: false, message: "Unable to delete book" });
       }
     } else {
       res.json({ sucess: false, message: "Book ID not provided" });
+    }
+  }
+
+  async searchBook(req, res) {
+    const { book } = req.query;
+
+    if (book) {
+      const data = await bookModel.findAll({
+        where: {
+          [Op.or]: {
+            name: {
+              [Op.like]: `%${book}%`,
+            },
+            author: {
+              [Op.like]: `%${book}%`,
+            },
+          },
+        },
+      });
+
+      if(data){
+        res.json(data);
+      }else{
+        res.json([]);
+      }
+    } else {
+      res.json({ sucess: false, message: "Empty query search string" });
     }
   }
 }

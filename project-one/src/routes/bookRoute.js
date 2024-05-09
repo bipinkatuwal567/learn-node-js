@@ -33,4 +33,6 @@ router.put("/update/:id", bookController.updateBook);
 
 router.delete("/delete/:id", bookController.deleteBook);
 
+router.get("/search/by", bookController.searchBook);
+
 export default router;
