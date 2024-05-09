@@ -28,6 +28,21 @@ export default class bookController {
     }
   }
 
+  async getBooks(req, res) {
+    let { limit } = req.query;
+    if (!limit) limit = 20;
+
+    const data = await bookModel.findAll({
+      limit,
+    });
+
+    if (data) {
+      res.json(data);
+    } else {
+      res.json({ sucess: false, message: "No data found" });
+    }
+  }
+
   async updateBook(req, res) {
     const { id } = req.params;
 
@@ -83,9 +98,9 @@ export default class bookController {
         },
       });
 
-      if(data){
+      if (data) {
         res.json(data);
-      }else{
+      } else {
         res.json([]);
       }
     } else {

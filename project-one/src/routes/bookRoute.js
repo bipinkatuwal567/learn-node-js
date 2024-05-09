@@ -29,6 +29,8 @@ router.post("/add", upload.single("image"), (req, res) => {
 
 router.get("/:id", bookController.getBook);
 
+router.get("/", bookController.getBooks);
+
 router.put("/update/:id", bookController.updateBook);
 
 router.delete("/delete/:id", bookController.deleteBook);
