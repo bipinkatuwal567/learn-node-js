@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import Dashboard from "./pages/Dashboard";
 import AddBook from "./pages/AddBook";
+import "./assets/sass/main.scss";
 
 function App() {
   return (
