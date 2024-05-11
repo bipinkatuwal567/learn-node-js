@@ -37,6 +37,9 @@ export default class bookController {
     });
 
     if (data) {
+      for(let d of data){
+        d.dataValues.image = "http://localhost:8000/uploads/" + d.dataValues.image;
+      }
       res.json(data);
     } else {
       res.json({ sucess: false, message: "No data found" });
