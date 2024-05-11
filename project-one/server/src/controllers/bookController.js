@@ -3,13 +3,16 @@ import bookModel from "../models/bookModel.js";
 
 export default class bookController {
   async addBook(req, res, imageName) {
-    const data = await bookModel.create({ ...req.body, image: imageName });
-    console.log(data);
+    try {
+      const data = await bookModel.create({ ...req.body, image: imageName });
 
-    if (data) {
-      res.json(data);
-    } else {
-      res.json({ sucess: false, message: "Error during adding book" });
+      if (data) {
+        res.json(data);
+      } else {
+        res.json({ sucess: false, message: "Error during adding book" });
+      }
+    } catch (err) {
+      return res.json({ success: false, message: "Error while querying in data" });
     }
   }
 
@@ -32,22 +35,22 @@ export default class bookController {
     let { limit } = req.query;
     if (!limit) limit = 20;
 
-    try{
+    try {
       const data = await bookModel.findAll({
         limit: parseInt(limit),
-        raw: true
+        raw: true,
       });
-  
+
       if (data) {
-        for(let d of data){
+        for (let d of data) {
           d.image = "http://localhost:8000/uploads/" + d.image;
         }
         res.json(data);
       } else {
         res.json({ sucess: false, message: "No data found" });
       }
-    }catch(err){
-     res.json({sucess: true, message: err}) 
+    } catch (err) {
+      res.json({ sucess: true, message: err });
     }
   }
 
@@ -104,9 +107,13 @@ export default class bookController {
             },
           },
         },
+        raw: true
       });
 
       if (data) {
+        for(let d of data){
+          d.image = "http://localhost:8000/uploads/" + d.image;
+        }
         res.json(data);
       } else {
         res.json([]);
