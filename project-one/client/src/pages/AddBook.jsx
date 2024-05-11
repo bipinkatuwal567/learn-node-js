@@ -20,19 +20,23 @@ const AddBook = () => {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    const response = await api.post(
-      "/book/add",
-      {
-        ...formData,
-        image: imageData,
-      }, {
-        headers: {
-            "Content-Type": "multipart/form-data",
+    try{
+      const response = await api.post(
+        "/book/add",
+        {
+          ...formData,
+          image: imageData,
+        }, {
+          headers: {
+              "Content-Type": "multipart/form-data",
+          }
         }
-      }
-    );
+      );
+      console.log("Response : ",response);
+    }catch(error){
+      console.log(error.response);
+    }
 
-    console.log(response);
   }
 
   return (
