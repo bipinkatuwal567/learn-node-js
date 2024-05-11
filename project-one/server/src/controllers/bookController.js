@@ -32,17 +32,22 @@ export default class bookController {
     let { limit } = req.query;
     if (!limit) limit = 20;
 
-    const data = await bookModel.findAll({
-      limit,
-    });
-
-    if (data) {
-      for(let d of data){
-        d.dataValues.image = "http://localhost:8000/uploads/" + d.dataValues.image;
+    try{
+      const data = await bookModel.findAll({
+        limit: parseInt(limit),
+        raw: true
+      });
+  
+      if (data) {
+        for(let d of data){
+          d.image = "http://localhost:8000/uploads/" + d.image;
+        }
+        res.json(data);
+      } else {
+        res.json({ sucess: false, message: "No data found" });
       }
-      res.json(data);
-    } else {
-      res.json({ sucess: false, message: "No data found" });
+    }catch(err){
+     res.json({sucess: true, message: err}) 
     }
   }
 
