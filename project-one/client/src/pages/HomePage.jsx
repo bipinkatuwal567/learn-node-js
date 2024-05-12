@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import api from "../api/config.js";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
+  const navigate = useNavigate();
+
   const [books, setBooks] = useState([]);
   const [tempBooks, setTempBooks] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -65,6 +68,11 @@ const HomePage = () => {
       >
         {books.length > 0 ? books.map((book) => (
           <div
+          onClick={() => navigate("/explore", {
+            state: {
+              book,
+            }
+          })}
             key={book.id}
             style={{
               padding: "1rem",

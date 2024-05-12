@@ -20,8 +20,11 @@ export default class bookController {
     const { id } = req.params;
 
     if (id) {
-      const data = await bookModel.findByPk(id);
+      const data = await bookModel.findByPk(id, {
+        raw: true
+      });
       if (data) {
+        data.image = "http://localhost:8000/uploads/" + data.image;
         res.json(data);
       } else {
         res.json([]);

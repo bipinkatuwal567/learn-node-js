@@ -4,6 +4,7 @@ import Dashboard from "./pages/Dashboard";
 import AddBook from "./pages/AddBook";
 import "./assets/sass/main.scss";
 import PageNotFound from "./pages/PageNotFound";
+import Explore from "./pages/Explore";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route index element={<Dashboard />} />
           <Route path="addbook" element={<AddBook />} />
         </Route>
+        <Route path="/explore" element={<Explore />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </BrowserRouter>
