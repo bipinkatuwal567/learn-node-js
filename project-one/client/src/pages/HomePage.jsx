@@ -21,13 +21,13 @@ const HomePage = () => {
   useEffect(() => {
     async function handleQuery() {
       const response = await api.get(`/book/search/by?book=${searchQuery}`);
-      
-      if(response.data){
+
+      if (response.data) {
         setBooks(response.data);
       }
     }
 
-    if(searchQuery) handleQuery();
+    if (searchQuery) handleQuery();
     else setBooks(tempBooks);
   }, [searchQuery]);
 
@@ -46,15 +46,15 @@ const HomePage = () => {
           alignItems: "center",
         }}
       >
-          <input
-            type="text"
-            style={{
-              width: "400px",
-            }}
-            onChange={(e) => {
-              setSearchQuery(e.target.value);
-            }}
-          />
+        <input
+          type="text"
+          style={{
+            width: "400px",
+          }}
+          onChange={(e) => {
+            setSearchQuery(e.target.value);
+          }}
+        />
       </div>
 
       <div
@@ -66,34 +66,41 @@ const HomePage = () => {
           marginTop: "2rem",
         }}
       >
-        {books.length > 0 ? books.map((book) => (
-          <div
-          onClick={() => navigate("/explore", {
-            state: {
-              book,
-            }
-          })}
-            key={book.id}
-            style={{
-              padding: "1rem",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              borderRadius: "6px",
-              boxShadow: "2px 2px 10px 0px rgba(0,0,0,0.2)",
-            }}
-          >
-            <img
-              src={book.image}
-              alt="hello"
-              style={{ height: "200px", width: "200px", objectFit: "contain" }}
-            />
-            <p>{book.name}</p>
-          </div>
-        )): (
-          <div>
-            No Books found...
-          </div>
+        {books.length > 0 ? (
+          books.map((book) => (
+            <div
+              onClick={() =>
+                navigate("/explore", {
+                  state: {
+                    book,
+                  },
+                })
+              }
+              key={book.id}
+              style={{
+                padding: "1rem",
+                display: "flex",
+                flexDirection: "column",
+                gap: "15px",
+                alignItems: "center",
+                borderRadius: "6px",
+                boxShadow: "2px 2px 10px 0px rgba(0,0,0,0.2)",
+              }}
+            >
+              <img
+                src={book.image}
+                alt="hello"
+                style={{
+                  height: "200px",
+                  width: "200px",
+                  objectFit: "contain",
+                }}
+              />
+              <p>{book.name}</p>
+            </div>
+          ))
+        ) : (
+          <div>No Books found...</div>
         )}
       </div>
     </main>

@@ -21,7 +21,7 @@ app.listen(process.env.PORT || 8000, async () => {
 
   try {
     await connection.authenticate();
-    connection.sync();
+    connection.sync({force: true});
     console.log("Successfully connected to DB");
   } catch (err) {
     console.error("Uanble to connect to the database ", err);

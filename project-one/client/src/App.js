@@ -5,6 +5,7 @@ import AddBook from "./pages/AddBook";
 import "./assets/sass/main.scss";
 import PageNotFound from "./pages/PageNotFound";
 import Explore from "./pages/Explore";
+import ListBooks from "./pages/ListBooks";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="addbook" element={<AddBook />} />
         </Route>
         <Route path="/explore" element={<Explore />} />
+        <Route path="/listbooks" element={<ListBooks />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </BrowserRouter>

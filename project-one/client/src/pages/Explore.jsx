@@ -21,19 +21,61 @@ const Explore = () => {
       style={{
         display: "flex",
         justifyContent: "center",
-        alignItems: "center",
-        flexDirection: "column",
-        gap: "10px",
-        marginTop: "2rem"
+        gap: "20px",
+        marginTop: "2rem",
       }}
     >
       <img
         src={bookData.image}
         alt={bookData.name}
-        style={{ height: "300px", width: "300px", objectFit: "contain" }}
+        style={{
+          height: "300px",
+          width: "300px",
+          objectFit: "contain",
+        }}
       />
-      <p>Title: {bookData.name}</p>
-      <p>Description: {bookData.description}</p>
+      <div style={{ marginTop: "2rem" }}>
+        <h2
+          style={{
+            textTransform: "capitalize",
+            fontSize: "18px",
+            fontWeight: "500",
+            color: "#000",
+          }}
+        >
+          {bookData.name}
+        </h2>
+        <p
+          style={{
+            textTransform: "capitalize",
+            fontSize: "14px",
+            color: "gray",
+            marginTop: ".5rem",
+          }}
+        >
+          Author: {bookData.author}
+        </p>
+        <p
+          style={{
+            textTransform: "capitalize",
+            fontSize: "14px",
+            color: "gray",
+            marginTop: ".5rem",
+          }}
+        >
+          Genre: {bookData.genre}
+        </p>
+        <p
+          style={{
+            textTransform: "capitalize",
+            fontSize: "14px",
+            color: "#000",
+            marginTop: "2rem",
+          }}
+        >
+          Description: {bookData.description}
+        </p>
+      </div>
     </div>
   );
 };
