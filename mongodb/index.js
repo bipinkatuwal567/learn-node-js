@@ -56,6 +56,22 @@ app.get("/update-blog/:id", async (req, res) => {
   }
 });
 
+// Delete operation
+app.get("/delete-blog/:id", async (req, res) => {
+    const { id } = req.params;
+  
+    try {
+      const response = await blogModel.deleteOne({
+          _id: id,
+      });
+      res.json(response);
+    } catch (err) {
+      res.json({
+        success: false,
+        message: err.message,
+      });
+    }
+  });
 
 app.listen(8000, async () => {
   console.log("Server has started!🚀");
