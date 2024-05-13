@@ -1,77 +1,13 @@
 import express from "express";
 import mongoose from "mongoose";
 import "dotenv/config";
-import blogModel from "./models/schema.js";
+import blogRouter from "./routes/blogRouter.js"
 
 const app = express();
 
-// Create operation
-app.get("/add-blog", async (req, res) => {
-  try {
-    const response = await blogModel.create({
-      title: "Title Two",
-      description: "Description Two",
-    });
-    res.json(response);
-  } catch (err) {
-    res.json({
-      success: false,
-      message: err.message,
-    });
-  }
-});
+app.use(express.json());
 
-// Read operatoin
-app.get("/get-blog/:id", async (req, res) => {
-  const { id } = req.params;
-  try {
-    const response = await blogModel.findById(id);
-    res.json(response);
-  } catch (err) {
-    res.json({
-      success: false,
-      message: err.message,
-    });
-  }
-});
-
-// Update operation
-app.get("/update-blog/:id", async (req, res) => {
-  const { id } = req.params;
-
-  try {
-    const response = await blogModel.findOne({
-        _id: id,
-    });
-    /* We can update data in mongoose using this */
-    response.title = "Updated title"
-    response.save();
-
-    res.json(response);
-  } catch (err) {
-    res.json({
-      success: false,
-      message: err.message,
-    });
-  }
-});
-
-// Delete operation
-app.get("/delete-blog/:id", async (req, res) => {
-    const { id } = req.params;
-  
-    try {
-      const response = await blogModel.deleteOne({
-          _id: id,
-      });
-      res.json(response);
-    } catch (err) {
-      res.json({
-        success: false,
-        message: err.message,
-      });
-    }
-  });
+app.use("/blog", blogRouter);
 
 app.listen(8000, async () => {
   console.log("Server has started!🚀");
